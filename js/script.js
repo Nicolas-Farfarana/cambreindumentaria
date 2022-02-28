@@ -2,20 +2,23 @@
 let precioTotalVenta = 0;
 let cantidadComprada = 0 ;
 
-function Producto (nombreProducto, stockProducto, precioProducto, descuentoProducto){
+function Producto (nombreProducto, precioProducto, stockProducto, descuentoProducto){
     this.nombre = nombreProducto ;
+    this.precio = parseFloat(precioProducto) ;
     this.stock = stockProducto ;
-    this.precio = precioProducto ;
     this.descuento = descuentoProducto ;
     this.venta = function (cantidadComprada){
         this.stock-= cantidadComprada;
         console.log ("El stock de  " + this.nombre  + " " + "es igual a: " + this.stock  )
     }
+
 }
 
-const productoA = new Producto("calzas", 10, 30, 0.9)
-const productoB = new Producto("tops", 20, 20, 0.95)
-const productoC = new Producto("conjuntos deportivos", 15, 50, 0.95)
+
+
+const productoA = new Producto("calzas", 30, 10, 0.9)
+const productoB = new Producto("tops", 20, 10, 0.95)
+const productoC = new Producto("conjuntos deportivos", 50, 15, 0.95)
 
 const productos =[productoA, productoB, productoC]
 
@@ -27,7 +30,7 @@ function calcularPrecio (precio, descuento){
     precioTotalVenta += cantidadComprada * precio * descuento;
 }
 
-function compra (producto,stock, precio, descuento ) {
+function compra (producto,precio ,stock, descuento ) {
 
     cantidadComprada = parseInt(prompt("Ingrese la cantidad de "+ producto.nombre + " que desea comprar")) ;
 
@@ -72,3 +75,9 @@ for( let i = 0; i < cantidadProductosComprados; i++){
 
 
 
+// AVISO PARA COMPRAR MAS PRODUCTOS
+
+let pocoStock = productos.filter(producto => producto.stock <= 3 )
+
+console.log("comprar mas productos: ")
+console.log(pocoStock)
