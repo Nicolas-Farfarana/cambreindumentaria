@@ -14,10 +14,8 @@ function Producto (nombreProducto, precioProducto, stockProducto, descuentoProdu
 
 }
 
-
-
 const productoA = new Producto("calzas", 30, 10, 0.9)
-const productoB = new Producto("tops", 20, 10, 0.95)
+const productoB = new Producto("tops", 20, 10, 0.9)
 const productoC = new Producto("conjuntos deportivos", 50, 15, 0.95)
 
 const productos =[productoA, productoB, productoC]
@@ -27,26 +25,26 @@ function stockInsuficiente(stock) {
 }
 
 function calcularPrecio (precio, descuento){
-    precioTotalVenta += cantidadComprada * precio * descuento;
+    precioTotalVenta += parseFloat(cantidadComprada * precio * descuento);
 }
 
-function compra (producto,precio ,stock, descuento ) {
+function compra (producto) {
 
     cantidadComprada = parseInt(prompt("Ingrese la cantidad de "+ producto.nombre + " que desea comprar")) ;
 
-        if (cantidadComprada <= stock){
+        if (cantidadComprada <= producto.stock){
 
             producto.venta(cantidadComprada)
 
             if (cantidadComprada > 3){
-                calcularPrecio(precio, descuento)
+                calcularPrecio(producto.precio, producto.descuento)
             }
             else{
-                calcularPrecio(precio, 1)
+                calcularPrecio(producto.precio, 1)
             }
         }
         else{
-            stockInsuficiente(stock)
+            stockInsuficiente(producto.stock)
             }
 }
 
@@ -58,20 +56,17 @@ for( let i = 0; i < cantidadProductosComprados; i++){
 
     let nombreCompra = prompt("ingrese el nombre de producto que desea comprar: " + "\n1." + productoA.nombre + "\n2." + productoB.nombre + "\n3. " + productoC.nombre);
 
-    if (nombreCompra.toLowerCase() == productoA.nombre){
-        compra (productoA, productoA.precio, productoA.stock, productoA.descuento)
-    }
-    else if (nombreCompra.toLowerCase() == productoB.nombre){
-        compra(productoB, productoB.precio, productoB.stock, productoB.descuento)
-    }
-    else if(nombreCompra.toLowerCase() == productoC.nombre){
-        compra(productoC, productoC.precio, productoC.stock, productoC.descuento)
+    let productoBuscado = productos.find ( x => x.nombre == nombreCompra.toLowerCase())
+
+    if(productoBuscado){
+        compra(productoBuscado)
     }
     else{
         alert("No tenemos ese producto")
     }
     }
-    alert("El precio de su compra es de: $ " + precioTotalVenta + "\nMuchas gracias! ")
+
+alert("El precio de su compra es de: $ " + precioTotalVenta + "\nMuchas gracias! ")
 
 
 
